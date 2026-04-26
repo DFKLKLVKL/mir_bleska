@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#0a2a38">
+    <title>Мир Блеска | Премиальная эпоксидная смола</title>
+    
+    <!-- PWA: Основной манифест -->
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22%D0%9C%D0%B8%D1%80%20%D0%91%D0%BB%D0%B5%D1%81%D0%BA%D0%B0%22%2C%22short_name%22%3A%22%D0%91%D0%BB%D0%B5%D1%81%D0%BA%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a2a38%22%2C%22theme_color%22%3A%22%230a2a38%22%2C%22description%22%3A%22%D0%9F%D1%80%D0%B5%D0%BC%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%20%D1%8D%D0%BF%D0%BE%D0%BA%D1%81%D0%B8%D0%B4%D0%BD%D0%B0%D1%8F%20%D1%81%D0%BC%D0%BE%D0%BB%D0%B0%20%D1%80%D1%83%D1%87%D0%BD%D0%BE%D0%B9%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%22%2C%22lang%22%3A%22ru%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%3E%253Cdefs%3E%253ClinearGradient%20id%3D'g'%20x1%3D'0%25'%20y1%3D'0%25'%20x2%3D'100%25'%20y2%3D'100%25'%3E%253Cstop%20offset%3D'0%25'%20style%3D'stop-color%3A%230a2a38'%2F%3E%253Cstop%20offset%3D'100%25'%20style%3D'stop-color%3A%231a4a5e'%2F%3E%253C%2FlinearGradient%3E%253C%2Fdefs%3E%253Ccircle%20cx%3D'50'%20cy%3D'50'%20r%3D'48'%20fill%3D'url(%23g)'%2F%3E%253Ctext%20x%3D'50'%20y%3D'62'%20text-anchor%3D'middle'%20font-size%3D'36'%20fill%3D'%23c4a06a'%3E%E2%97%86%3C%2Ftext%3E%253C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+    
+    <!-- PWA: iOS-совместимость -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Мир Блеска">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%230a2a38'/%3E%3Cstop offset='100%25' style='stop-color:%231a4a5e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23g)'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-size='36' fill='%23c4a06a'%3E◆%3C/text%3E%3C/svg%3E">
+    
+    <!-- Telegram Web App Integration -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ФОНЫ -->
+<div class="background-container" id="backgroundContainer"></div>
+<div class="bg-overlay"></div>
+
+<!-- УВЕДОМЛЕНИЯ -->
+<div id="notification" class="notification hidden"></div>
+
+<!-- PWA: Баннер установки -->
+<div id="installBanner" class="install-banner hidden">
+    <button class="install-close" id="closeInstallBanner">✕</button>
+    <div class="install-icon">💎</div>
+    <div class="install-text">
+        <h4>Установить приложение</h4>
+        <p>Быстрый доступ к каталогу без браузера</p>
+    </div>
+    <button class="install-btn" id="installBtn">Установить</button>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ ПАРОЛЯ АДМИНКИ -->
+<div id="passwordModal" class="modal-overlay hidden password-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title">🔐 Доступ к админ-панели</h3>
+            <button class="modal-close" id="closePasswordModalBtn">✕</button>
+        </div>
+        <form id="passwordForm">
+            <label class="admin-label">Введите пароль</label>
+            <input type="password" id="adminPassword" class="admin-input password-input" placeholder="••••••••" autocomplete="off">
+            <div id="passwordError" class="error-message" style="display:none;">❌ Неверный пароль</div>
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top:16px;">Войти</button>
+            <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" id="cancelPasswordBtn">Отмена</button>
+        </form>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ КОНТАКТОВ -->
+<div id="contactModal" class="modal-overlay hidden">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title">📞 Ваши контакты</h3>
+            <button class="modal-close" id="closeContactModalBtn">✕</button>
+        </div>
+        <form id="contactForm">
+            <label class="admin-label">Ваше имя *</label>
+            <input type="text" id="customerName" class="admin-input" placeholder="Иван Петров" required 
+                   pattern="[A-Za-zА-Яа-яЁё\s\-]+" 
+                   title="Имя может содержать только буквы, пробелы и дефисы"
+                   autocomplete="name">
+            <div id="nameError" class="error-message" style="display:none; margin-top:-8px; margin-bottom:12px;"></div>
+            
+            <label class="admin-label">Телефон *</label>
+            <input type="tel" id="customerPhone" class="admin-input" placeholder="+7 (999) 123-45-67" required>
+            
+            <label class="admin-label">Email (необязательно)</label>
+            <input type="email" id="customerEmail" class="admin-input" placeholder="ivan@example.com">
+            
+            <label class="admin-label">Комментарий к заказу</label>
+            <textarea id="orderComment" class="admin-textarea" rows="2" placeholder="Укажите пожелания..."></textarea>
+            
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="agreeTerms" required>
+                <label style="font-size:13px;" for="agreeTerms">Я согласен на обработку персональных данных</label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top:16px;">✅ Подтвердить заказ</button>
+            <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" id="cancelContactBtn">Отмена</button>
+        </form>
+    </div>
+</div>
+
+<!-- КОРЗИНА -->
+<div id="cartOverlay" class="cart-overlay hidden"></div>
+<div id="cartSidebar" class="cart-sidebar hidden">
+    <div class="cart-header">
+        <h3>🛒 Корзина</h3>
+        <button id="closeCartBtn" class="close-cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+        <div class="cart-total"><span>Итого</span><span id="cartTotal">0 ₽</span></div>
+        <button id="checkoutBtn" class="checkout-btn">Оформить заказ</button>
+    </div>
+</div>
+
+<!-- АДМИН-ПАНЕЛЬ -->
+<div id="adminPanel" class="admin-panel hidden">
+    <div class="admin-header">
+        <h3>⚡ Управление</h3>
+        <button id="closeAdminBtn" class="close-admin">✕</button>
+    </div>
+    <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="products">🛍️ Товары</button>
+        <button class="admin-tab" data-tab="backgrounds">🖼️ Фоны</button>
+        <button class="admin-tab" data-tab="content">📝 Контент</button>
+        <button class="admin-tab" data-tab="orders">📦 Заказы</button>
+    </div>
+    <div class="admin-content" id="adminContent"></div>
+</div>
+
+<!-- САЙТ -->
+<div style="background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); color: #0a2a38; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.8);">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between;">
+            <span id="displayAddress">📍 Ейск, Таганрогская наб., 15</span>
+            <span id="displayContacts">📞 +7 (861) 123-45-67</span>
+        </div>
+    </div>
+</div>
+
+<header style="background: rgba(255,255,255,0.6); backdrop-filter: blur(16px); padding: 16px 0; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.8);">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <span class="logo" style="font-family: var(--font-serif); font-size: 28px; letter-spacing: 6px; cursor: pointer; color: #0a2a38; text-shadow: 0 2px 6px rgba(255,255,255,0.7);" onclick="window.scrollTo({top:0,behavior:'smooth'})">МИР БЛЕСКА</span>
+                <span style="font-size: 10px; letter-spacing: 3px; color: var(--secondary); margin-left: 12px; text-shadow: 0 1px 2px white;">Ейск · Азовское море</span>
+            </div>
+            <div>
+                <button id="cartBtn" class="btn btn-outline" style="padding: 8px 16px; background: rgba(255,255,255,0.3);">🛒 <span id="cartCount">0</span></button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section style="padding: 40px 0;">
+    <div class="container">
+        <div style="background: rgba(255,255,255,0.4); backdrop-filter: blur(16px); padding: 48px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.7);">
+            <div id="heroSubtitle" style="font-size: 14px; letter-spacing: 4px; color: var(--primary); font-weight: 500;">Студия эпоксидной смолы</div>
+            <h1 id="heroTitle" style="font-size: 48px; margin: 20px 0; color: #0a2a38; text-shadow: 0 4px 8px rgba(255,255,255,0.6);">Искусство в каждой <span style="color: var(--secondary);">детали</span></h1>
+            <p id="heroDescription" style="color: #1a2e3b; font-weight: 400;">Эксклюзивные изделия ручной работы с использованием натуральных материалов Азовского побережья</p>
+            <button id="catalogBtn" class="btn btn-primary clickable" style="margin-top: 24px;">Открыть каталог</button>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <h2 class="section-title">Избранные работы</h2>
+    <div id="productGrid" class="product-grid"></div>
+</div>
+
+<footer style="background: rgba(5,23,31,0.85); color: white; padding: 40px 0; margin-top: 60px; backdrop-filter: blur(8px); border-top: 1px solid rgba(255,255,255,0.2);">
+    <div class="container">
+        <div class="footer-inner">
+            <div id="footerCopyright">© 2025 Мир Блеска</div>
+            <div id="footerLocation">Сделано в Ейске · Азовское море</div>
+            <button id="devModeBtn" class="dev-btn">⚙️</button>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="js/utils.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
