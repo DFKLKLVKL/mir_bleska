@@ -2,40 +2,41 @@
 
 STRUCTURE:
 
-MIR_BLESKA/
+MirBleska/
 │
-├── backend/                     # C# API
-│   └── MirBleska.Api/
-│       ├── Controllers/
-│       │   └── OrdersController.cs
-│       │
-│       ├── Data/
-│       │   └── AppDbContext.cs
-│       │
-│       ├── Models/
-│       │   └── Order.cs
-│       │
-│       ├── Migrations/
-│       │
-│       ├── Program.cs
-│       ├── appsettings.json
-│       └── MirBleska.Api.csproj
+├── backend/ (MirBleska.api)
+│   ├── bin/                         
+│   ├── Controllers/
+│   │   ├── OrderController.cs
+│   │   └── ProductsController.cs
+│   ├── Data/
+│   │   ├── AppDbContext.cs
+│   │   └── Migrations/             
+│   ├── Models/
+│   │   ├── Order.cs
+│   │   └── Product.cs
+│   ├── obj/                         
+│   ├── Properties/
+│   │   └── launchSettings.json
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── mir_bleska.sln
+│   ├── MirBleska.api.csproj
+│   ├── MirBleska.api.http
+│   └── Program.cs
 │
-├── frontend/                    # фронт 
-│   ├── assets/
+├── frontend/
+│   ├── assets/                     
 │   ├── css/
 │   │   └── style.css
-│   │
 │   ├── js/
 │   │   ├── admin.js
 │   │   ├── app.js
 │   │   ├── cart.js
 │   │   └── utils.js
-│   │
 │   └── index.html
 │
-├── README.md
-└── docker-compose.yml (потом)
+└── README.md
 
 
 =========================================================================================================================================
