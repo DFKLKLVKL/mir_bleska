@@ -1,21 +1,50 @@
 # mir_bleska
 
+STRUCTURE:
 
-MirBleska/
-├── backend/                    # Папка с C# сервером
-│   ├── Program.cs
-│   ├── appsettings.json
-│   └── MirBleska.csproj
+MIR_BLESKA/
 │
-├── frontend/                   # Папка с фронтендом (ваш существующий)
-│   ├── index.html
-│   ├── admin.html
+├── backend/                     # C# API
+│   └── MirBleska.Api/
+│       ├── Controllers/
+│       │   └── OrdersController.cs
+│       │
+│       ├── Data/
+│       │   └── AppDbContext.cs
+│       │
+│       ├── Models/
+│       │   └── Order.cs
+│       │
+│       ├── Migrations/
+│       │
+│       ├── Program.cs
+│       ├── appsettings.json
+│       └── MirBleska.Api.csproj
+│
+├── frontend/                    # фронт 
+│   ├── assets/
 │   ├── css/
-│   │   └── styles.css
-│   └── js/
-│       ├── app.js
-│       ├── cart.js
-│       ├── utils.js
-│       └── admin.js
+│   │   └── style.css
+│   │
+│   ├── js/
+│   │   ├── admin.js
+│   │   ├── app.js
+│   │   ├── cart.js
+│   │   └── utils.js
+│   │
+│   └── index.html
 │
-└── orders.db                   # База данных (создастся автоматически)
+├── README.md
+└── docker-compose.yml (потом)
+
+
+=========================================================================================================================================
+
+
+SQL:
+id, name, phone, email, comment, items, total, status, crate_at
+
+
+
+
+

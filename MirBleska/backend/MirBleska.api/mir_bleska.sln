@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MirBleska", "MirBleska", "{5A353428-CA85-7BD9-D46A-F91154F1CA45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{D16595FA-096C-98FC-46D8-298D520038D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MirBleska.api", "MirBleska\backend\MirBleska.api\MirBleska.api.csproj", "{C335E8C0-CF10-D12A-1852-041B1FB509B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C335E8C0-CF10-D12A-1852-041B1FB509B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C335E8C0-CF10-D12A-1852-041B1FB509B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C335E8C0-CF10-D12A-1852-041B1FB509B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C335E8C0-CF10-D12A-1852-041B1FB509B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D16595FA-096C-98FC-46D8-298D520038D9} = {5A353428-CA85-7BD9-D46A-F91154F1CA45}
+		{C335E8C0-CF10-D12A-1852-041B1FB509B0} = {D16595FA-096C-98FC-46D8-298D520038D9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0FCEC14-883C-4B3A-930A-5D823BB660B6}
+	EndGlobalSection
+EndGlobal
