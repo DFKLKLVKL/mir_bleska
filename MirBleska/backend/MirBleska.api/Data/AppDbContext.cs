@@ -1,3 +1,5 @@
+using System.Dynamic;
+using System.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using MirBleska.Api.Models;
 
@@ -9,4 +11,5 @@ public class AppDbContext : DbContext
         : base(options) { }
 
     public DbSet<Order> Orders => Set<Order>();
+    public DbSet<Product> Products{get;set;}
 }
