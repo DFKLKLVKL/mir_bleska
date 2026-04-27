@@ -38,7 +38,7 @@ async function loadProducts() {
 function openContactModal() {
     document.getElementById("contactModal").classList.remove("hidden");
 }
-
+button.onclick = () => addToCart(p.id, 1);
 async function submitOrder(e) {
     e.preventDefault();
 

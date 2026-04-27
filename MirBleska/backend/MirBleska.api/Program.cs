@@ -38,6 +38,7 @@ app.UseCors("AllowAll");
 app.UseRouting();
 
 app.MapControllers();
+builder.Services.AddHttpContextAccessor();
 
 // 🔹 Автосоздание БД + тестовые данные
 using (var scope = app.Services.CreateScope())
