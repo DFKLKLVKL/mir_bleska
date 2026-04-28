@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MirBleska.Api.Data;      // ← ЭТА СТРОКА ВАЖНА
+using MirBleska.Api.Models;
 
 namespace MirBleska.Api.Controllers
 {

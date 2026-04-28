@@ -6,17 +6,16 @@ using System.Text.Json;
 namespace MirBleska.Api.Controllers;
 
 [ApiController]
-[Route("api/orders")]
-public class OrdersController : ControllerBase
+[Route("api/[controller]")]
+public class OrderController : ControllerBase
 {
     private readonly AppDbContext _db;
 
-    public OrdersController(AppDbContext db)
+    public OrderController(AppDbContext db)
     {
         _db = db;
     }
 
-    // POST /api/orders
     [HttpPost]
     public async Task<IActionResult> CreateOrder([FromBody] OrderRequest request)
     {
@@ -27,23 +26,21 @@ public class OrdersController : ControllerBase
             Email = request.Customer.Email,
             Comment = request.Comment,
             ItemsJson = JsonSerializer.Serialize(request.Items),
-            Total = request.Total
+            Total = request.Total,
+            Status = "new",
+            CreatedAt = DateTime.UtcNow  // ← Явно указываем дату
         };
 
         _db.Orders.Add(order);
         await _db.SaveChangesAsync();
 
-        return Ok(order.Id);
+        return Ok(new { id = order.Id, message = "Заказ создан" });
     }
 
-    // GET /api/orders
     [HttpGet]
     public IActionResult GetOrders()
     {
-        var orders = _db.Orders
-            .OrderByDescending(o => o.CreatedAt)
-            .ToList();
-
+        var orders = _db.Orders.OrderByDescending(o => o.CreatedAt).ToList();
         return Ok(orders);
     }
 }

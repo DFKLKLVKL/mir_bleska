@@ -1,70 +1,51 @@
 using Microsoft.EntityFrameworkCore;
 using MirBleska.Api.Data;
+using MirBleska.Api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔹 Контроллеры
 builder.Services.AddControllers();
-
-// 🔹 Swagger (чтобы тестить API в браузере)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 🔹 База данных (PostgreSQL)
+// База данных SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+    options.UseSqlite("Data Source=mir_bleska.db"));
 
-// 🔹 CORS (чтобы фронт работал)
+// CORS - исправлено для credentials
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        policy =>
-        {
-            policy.AllowAnyOrigin()
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.SetIsOriginAllowed(_ => true)
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
 });
 
 var app = builder.Build();
 
-// 🔹 Swagger включаем
 app.UseSwagger();
 app.UseSwaggerUI();
-
-// 🔹 CORS включаем
 app.UseCors("AllowAll");
-
-app.UseRouting();
-
 app.MapControllers();
-builder.Services.AddHttpContextAccessor();
 
-// 🔹 Автосоздание БД + тестовые данные
+// Создание БД и тестовых данных
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
     db.Database.EnsureCreated();
-
+    
     if (!db.Products.Any())
     {
         db.Products.AddRange(
-            new Models.Product
-            {
-                Name = "Стол из эпоксидной смолы",
-                Price = 15000,
-                ImageUrl = "https://via.placeholder.com/300"
-            },
-            new Models.Product
-            {
-                Name = "Поднос ручной работы",
-                Price = 3000,
-                ImageUrl = "https://via.placeholder.com/300"
-            }
+            new Product { Name = "Стол из эпоксидной смолы", Price = 15000, ImageUrl = "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=300" },
+            new Product { Name = "Поднос ручной работы", Price = 3000, ImageUrl = "https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=300" },
+            new Product { Name = "Картина с морем", Price = 8500, ImageUrl = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300" }
         );
-
         db.SaveChanges();
+        Console.WriteLine("✅ Тестовые товары добавлены!");
     }
 }
 
